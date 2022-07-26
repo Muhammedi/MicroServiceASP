@@ -49,5 +49,23 @@ namespace CatalogAPI.Controllers
             var result = await _repo.GetbyCategoryName(name);
             return Ok(result);
         }
+        [HttpPost]
+        public async Task<IActionResult> CreatePRoduct([FromBody]Product product)
+        {
+             await _repo.CreateProduct(product);
+            return CreatedAtAction("GetAll",new { id = product.ID, Controller = "CatalogAPI" },product);
+        }
+        [HttpPut("")]
+        public async Task<IActionResult> UpdateData([FromBody]Product product)
+        {
+            await _repo.UpdatePRoduct(product);
+            return Ok();
+        }
+        [HttpDelete("{id:length(24)}",Name ="DeleteProduct")]
+        public async Task<IActionResult> DeleteData([FromRoute]string id)
+        {
+            await _repo.DeleteProduct(id);
+            return Ok();
+        }
     }
 }
